@@ -99,7 +99,7 @@ async function startServer() {
             });
           } else {
             // Forward UpesiPay response details
-            return res.status(upesiData.status_code || 400).json({
+            return res.status(200).json({
               success: false,
               error: upesiData.message || 'Payment initiation rejected by UpesiPay gateway.',
               errorCode: upesiData.error_code,

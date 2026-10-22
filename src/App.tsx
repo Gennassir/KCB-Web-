@@ -227,9 +227,20 @@ export default function App() {
         }),
       });
 
-      const result = await response.json();
+      let result: any = null;
+      try {
+        result = await response.json();
+      } catch {
+        const rawText = await response.text().catch(() => '');
+        showToast(
+          'Payment Error',
+          `Server returned status ${response.status}: ${rawText.slice(0, 80) || response.statusText || 'Invalid server response.'}`,
+          'error'
+        );
+        return;
+      }
 
-      if (result.success) {
+      if (result && result.success) {
         setReference(result.reference);
         setCurrentPanel('processing');
 
@@ -254,26 +265,31 @@ export default function App() {
           }
 
           try {
-            const statusRes = await fetch(`/api/status/${encodeURIComponent(result.reference)}`);
-            const statusData = await statusRes.json();
-
-            if (statusData.status === 'completed') {
-              if (pollTimerRef.current) clearInterval(pollTimerRef.current);
-              setCurrentPanel('success');
-            } else if (statusData.status === 'failed') {
-              if (pollTimerRef.current) clearInterval(pollTimerRef.current);
-              showToast('Payment Failed', 'Transaction failed. Please try again.', 'error');
-              setCurrentPanel('withdraw');
+            let statusRes = await fetch(`/api/status/${encodeURIComponent(result.reference)}`);
+            if (!statusRes.ok) {
+              statusRes = await fetch(`/api/status?reference=${encodeURIComponent(result.reference)}`);
+            }
+            if (statusRes.ok) {
+              const statusData = await statusRes.json();
+              if (statusData.status === 'completed') {
+                if (pollTimerRef.current) clearInterval(pollTimerRef.current);
+                setCurrentPanel('success');
+              } else if (statusData.status === 'failed') {
+                if (pollTimerRef.current) clearInterval(pollTimerRef.current);
+                showToast('Payment Failed', 'Transaction failed. Please try again.', 'error');
+                setCurrentPanel('withdraw');
+              }
             }
           } catch (err) {
             console.error('Error checking status:', err);
           }
         }, 3000);
       } else {
-        showToast('Payment Failed', result.error || 'Transaction failed. Please try again.', 'error');
+        showToast('Payment Failed', result?.error || 'Transaction failed. Please try again.', 'error');
       }
-    } catch {
-      showToast('Payment Error', 'Network error. Please try again.', 'error');
+    } catch (err: unknown) {
+      const error = err as Error;
+      showToast('Payment Error', error?.message || 'Network error. Please try again.', 'error');
     } finally {
       setIsInitiatingPayment(false);
     }
