@@ -1,0 +1,532 @@
+@import "tailwindcss";
+
+:root {
+            --background: #f8fafc;
+            --foreground: #121926;
+            --card: #ffffff;
+            --primary: #0b853d;
+            --primary-dark: #075a2d;
+            --primary-soft: #eaf7ef;
+            --accent: #e50000;
+            --secondary: #edf7f1;
+            --muted: #f1f5f9;
+            --muted-foreground: #5b6472;
+            --border: #d8e0e8;
+            --danger: #dc2626;
+            --success: #16a34a;
+            --radius: 8px;
+            --shadow-card: 0 4px 24px -4px rgba(9, 81, 40, 0.1);
+            --shadow-elevated: 0 12px 40px -8px rgba(9, 81, 40, 0.18);
+            --gradient-hero: linear-gradient(160deg, #0b853d 0%, #075a2d 60%, #141414 100%);
+            --font-heading: "Space Grotesk", sans-serif;
+            --font-body: "DM Sans", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--foreground);
+            font-family: var(--font-body);
+            line-height: 1.5;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin: 0;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:disabled {
+            cursor: default;
+            opacity: 0.65;
+        }
+
+        .screen {
+            min-height: 100vh;
+            background: var(--background);
+        }
+
+        .screen.hidden {
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .hero {
+            background: var(--gradient-hero);
+            color: #ffffff;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero-inner,
+        .section-wide {
+            width: 100%;
+            max-width: 64rem;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.25rem, 7vw, 3rem);
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: 0;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            max-width: 42rem;
+            margin: 0 auto;
+            font-size: clamp(1.125rem, 3vw, 1.25rem);
+            opacity: 0.9;
+        }
+
+        .feature-band {
+            max-width: 64rem;
+            margin: -2rem auto 0;
+            padding: 0 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .feature-card,
+        .loan-card,
+        .panel {
+            background: var(--card);
+            border: 1px solid rgba(216, 224, 232, 0.75);
+            border-radius: 12px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .feature-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1.25rem;
+        }
+
+        .feature-icon,
+        .status-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(11, 133, 61, 0.1);
+            color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 8px;
+        }
+
+        .feature-card h3,
+        .card-title,
+        .panel-title {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--foreground);
+            letter-spacing: 0;
+        }
+
+        .feature-card h3 {
+            font-size: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        .loan-section {
+            max-width: 64rem;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .loan-section h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4vw, 1.875rem);
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .loan-section>p {
+            color: var(--muted-foreground);
+            margin-bottom: 1.5rem;
+        }
+
+        .loan-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .loan-card {
+            padding: 1.5rem;
+            text-align: left;
+            transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .loan-card:hover {
+            border-color: rgba(11, 133, 61, 0.4);
+            box-shadow: var(--shadow-elevated);
+            transform: translateY(-2px);
+        }
+
+        .loan-label {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .loan-amount {
+            font-family: var(--font-heading);
+            font-size: clamp(1.75rem, 5vw, 1.875rem);
+            line-height: 1.1;
+            font-weight: 700;
+            color: var(--foreground);
+            white-space: nowrap;
+        }
+
+        .mpesa-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 1rem;
+            border-radius: 999px;
+            background: rgba(229, 0, 0, 0.1);
+            color: var(--accent);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            min-height: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .loan-card .btn {
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #087235;
+        }
+
+        .btn-outline {
+            background: var(--background);
+            color: var(--foreground);
+            border-color: var(--border);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+        }
+
+        .site-footer {
+            background: var(--secondary);
+            color: var(--muted-foreground);
+            text-align: center;
+            padding: 1.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .apply-header {
+            background: var(--gradient-hero);
+            color: #ffffff;
+            padding: 2rem 1rem;
+        }
+
+        .apply-header-inner,
+        .apply-main {
+            max-width: 36rem;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 0;
+            color: #ffffff;
+            background: transparent;
+            padding: 0.5rem 0;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+
+        .apply-header h1 {
+            font-family: var(--font-heading);
+            font-size: 1.875rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .apply-header p {
+            margin-top: 0.25rem;
+            opacity: 0.9;
+        }
+
+        .apply-main {
+            padding: 2rem 1rem;
+        }
+
+        .panel {
+            box-shadow: var(--shadow-elevated);
+            overflow: hidden;
+        }
+
+        .panel-head {
+            padding: 1.5rem 1.5rem 0;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+        }
+
+        .panel-body {
+            padding: 1.5rem;
+        }
+
+        .form-stack,
+        .state-stack {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            min-height: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--background);
+            color: var(--foreground);
+            padding: 0.5rem 0.75rem;
+            outline: none;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(11, 133, 61, 0.14);
+        }
+
+        .status-card {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .status-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 999px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .status-icon.success {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .status-card h2 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card p {
+            color: var(--muted-foreground);
+            font-size: 1rem;
+        }
+
+        .status-card p+p {
+            margin-top: 0.25rem;
+        }
+
+        .status-card .btn {
+            width: auto;
+            min-width: 12rem;
+            margin-top: 1.5rem;
+            min-height: 3rem;
+            padding-inline: 2rem;
+        }
+
+        .summary-box {
+            background: var(--secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .summary-row span:first-child {
+            color: var(--muted-foreground);
+        }
+
+        .summary-row strong {
+            text-align: right;
+        }
+
+        .text-primary {
+            color: var(--primary);
+        }
+
+        .muted-note {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        .notice {
+            background: var(--secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        .toast {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 20;
+            width: min(24rem, calc(100vw - 2rem));
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-elevated);
+            padding: 1rem;
+            transform: translateY(1rem);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .toast.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.error {
+            border-color: rgba(220, 38, 38, 0.35);
+        }
+
+        .toast-title {
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .toast-message {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid currentColor;
+            border-right-color: transparent;
+            border-radius: 999px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (min-width: 640px) {
+            .loan-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 768px) {
+            .feature-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .loan-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 430px) {
+            .loan-card {
+                padding: 1rem;
+            }
+
+            .loan-amount {
+                font-size: 1.4rem;
+            }
+
+            .btn {
+                padding-inline: 0.75rem;
+            }
+        }
